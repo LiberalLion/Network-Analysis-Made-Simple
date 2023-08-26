@@ -37,15 +37,14 @@ def path_exists(node1, node2, G):
     visited_nodes = set()
     queue = [node1]
 
-    while len(queue) > 0:
+    while queue:
         node = queue.pop()
         neighbors = list(G.neighbors(node))
         if node2 in neighbors:
             return True
-        else:
-            visited_nodes.add(node)
-            nbrs = [n for n in neighbors if n not in visited_nodes]
-            queue = nbrs + queue
+        visited_nodes.add(node)
+        nbrs = [n for n in neighbors if n not in visited_nodes]
+        queue = nbrs + queue
 
     return False
 
@@ -78,9 +77,8 @@ def path_exists_for_loop(node1, node2, G):
         neighbors = list(G.neighbors(node))
         if node2 in neighbors:
             return True
-        else:
-            visited_nodes.add(node)
-            queue.extend([n for n in neighbors if n not in visited_nodes])
+        visited_nodes.add(node)
+        queue.extend([n for n in neighbors if n not in visited_nodes])
 
     return False
 
@@ -97,9 +95,8 @@ def path_exists_deque(node1, node2, G):
         neighbors = list(G.neighbors(node))
         if node2 in neighbors:
             return True
-        else:
-            visited_nodes.add(node)
-            queue.extend([n for n in neighbors if n not in visited_nodes])
+        visited_nodes.add(node)
+        queue.extend([n for n in neighbors if n not in visited_nodes])
 
     return False
 

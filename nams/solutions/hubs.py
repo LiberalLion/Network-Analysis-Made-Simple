@@ -95,11 +95,9 @@ def dc_node_order(G):
     dcs = pd.Series(nx.degree_centrality(G))
 
     # Maximum node order difference
-    maxdiffs = dict()
+    maxdiffs = {}
     for n, d in G.nodes(data=True):
-        diffs = []
-        for nbr in G.neighbors(n):
-            diffs.append(abs(G.nodes[nbr]["order"] - d["order"]))
+        diffs = [abs(G.nodes[nbr]["order"] - d["order"]) for nbr in G.neighbors(n)]
         maxdiffs[n] = max(diffs)
     maxdiffs = pd.Series(maxdiffs)
 

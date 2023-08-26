@@ -21,7 +21,7 @@ def read_mkdocs() -> Dict:
     Parse mkdocs.yml in project root dir.
     """
     with open(here() / "mkdocs.yml", "r+") as f:
-        f = "".join(l for l in f.readlines())
+        f = "".join(f.readlines())
         mkdocs_config = yaml.safe_load(f)
     return mkdocs_config
 
@@ -68,8 +68,7 @@ def read_notebook(fpath: Path) -> NotebookNode:
 def md2nbcell(md: str) -> NotebookNode:
     """Convert markdown to Jupyter notebook cell."""
     data = {"cell_type": "markdown", "metadata": {}, "source": md}
-    cell = nbformat.NotebookNode(**data)
-    return cell
+    return nbformat.NotebookNode(**data)
 
 
 def compile_code_cells(title_fpaths: List, docroot: Path, insert_titles=True) -> List:
@@ -173,12 +172,11 @@ def exclude(title_files: List, titles: List = [], files: List = []):
 
     Only exact matches are used.
     """
-    filtered = []
-    for title, fname in title_files:
-        if title in titles or fname in files:
-            continue
-        filtered.append((title, fname))
-    return filtered
+    return [
+        (title, fname)
+        for title, fname in title_files
+        if title not in titles and fname not in files
+    ]
 
 
 def insert_binder_cell(
@@ -226,10 +224,11 @@ def remove_binder_cell(nb: NotebookNode) -> NotebookNode:
     """
     Remove cell that contains Binder link.
     """
-    new_cells = []
-    for cell in nb["cells"]:
-        if not "https://mybinder.org/badge_logo.svg" in cell.source:
-            new_cells.append(cell)
+    new_cells = [
+        cell
+        for cell in nb["cells"]
+        if "https://mybinder.org/badge_logo.svg" not in cell.source
+    ]
     nb["cells"] = new_cells
     return nb
 

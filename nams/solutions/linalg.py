@@ -1,5 +1,5 @@
 def adjacency_matrix_power():
-    ans = """
+    return """
 1. The diagonals equal to the degree of each node.
 1. The off-diagonals also contain values,
 which correspond to the number of paths that exist of length 2
@@ -12,4 +12,3 @@ from itself back to itself,
 while for the middle nodes, there are 2 paths
 from itself back to itself!
 """
-    return ans

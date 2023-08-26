@@ -3,11 +3,9 @@ import networkx as nx
 
 
 def weighted_degree(G, weight):
-    result = dict()
+    result = {}
     for node in G.nodes():
-        weight_degree = 0
-        for n in G.edges([node], data=True):
-            weight_degree += n[2]["weight"]
+        weight_degree = sum(n[2]["weight"] for n in G.edges([node], data=True))
         result[node] = weight_degree
     return result
 
@@ -30,7 +28,7 @@ def evol_betweenness(graphs):
 
     set_of_char = set()
     for i in range(5):
-        set_of_char |= set(list(evol_df.T[i].sort_values(ascending=False)[0:5].index))
+        set_of_char |= set(list(evol_df.T[i].sort_values(ascending=False)[:5].index))
 
     evol_df[list(set_of_char)].plot(figsize=(19, 10))
 

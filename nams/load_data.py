@@ -154,7 +154,7 @@ def load_crime_network():
 
 
 def load_university_social_network():
-    G = nx.read_edgelist(
+    return nx.read_edgelist(
         datasets / "moreno_oz/out.moreno_oz_oz",
         comments="%",
         delimiter=" ",
@@ -162,7 +162,6 @@ def load_university_social_network():
         create_using=nx.DiGraph(),
         nodetype=int,
     )
-    return G
 
 
 def load_amazon_reviews():
@@ -192,13 +191,13 @@ def load_amazon_reviews():
 
 
 def load_game_of_thrones_data():
-    books = pd.read_csv(datasets / "game_of_thrones_network/asoiaf.csv", index_col="id")
-    return books
+    return pd.read_csv(
+        datasets / "game_of_thrones_network/asoiaf.csv", index_col="id"
+    )
 
 
 def load_airports_data():
-    pass_air_data = pd.read_csv(datasets / "passengers.csv", index_col="id")
-    return pass_air_data
+    return pd.read_csv(datasets / "passengers.csv", index_col="id")
 
 
 def load_airports_GPS_data():

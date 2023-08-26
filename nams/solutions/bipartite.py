@@ -4,10 +4,12 @@ from nams.functions import render_html
 
 
 def extract_partition_nodes(G: nx.Graph, partition: str):
-    nodeset = [n for n, d in G.nodes(data=True) if d["bipartite"] == partition]
-    if len(nodeset) == 0:
+    if nodeset := [
+        n for n, d in G.nodes(data=True) if d["bipartite"] == partition
+    ]:
+        return nodeset
+    else:
         raise Exception(f"No nodes exist in the partition {partition}!")
-    return nodeset
 
 
 def draw_bipartite_graph_example():
@@ -84,23 +86,22 @@ def find_connected_persons(G, person, crime):
         if p in candidate_neighbors:
             candidate_neighbors.remove(p)
 
-    # Step 4: Rank-order the candidate neighbors by number of shared connections.
-    data = []
-    for nbr in candidate_neighbors:
-        data.append(dict(node=nbr, weight=person_graph.edges[person, nbr]["weight"]))
+    data = [
+        dict(node=nbr, weight=person_graph.edges[person, nbr]["weight"])
+        for nbr in candidate_neighbors
+    ]
     return pd.DataFrame(data).sort_values("weight", ascending=False)
 
 
 def bipartite_degree_centrality_denominator():
     """Answer to bipartite graph denominator for degree centrality."""
 
-    ans = """
+    return """
 The total number of neighbors that a node can _possibly_ have
 is the number of nodes in the other partition.
 This comes naturally from the definition of a bipartite graph,
 where nodes can _only_ be connected to nodes in the other partition.
 """
-    return ans
 
 
 def find_most_crime_person(G, person_nodes):

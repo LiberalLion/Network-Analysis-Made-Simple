@@ -28,10 +28,10 @@ def in_triangle(G, node):
     """
     Return whether a given node is present in a triangle relationship.
     """
-    for nbr1, nbr2 in combinations(G.neighbors(node), 2):
-        if G.has_edge(nbr1, nbr2):
-            return True
-    return False
+    return any(
+        G.has_edge(nbr1, nbr2)
+        for nbr1, nbr2 in combinations(G.neighbors(node), 2)
+    )
 
 
 def get_triangle_neighbors(G, node) -> set:
@@ -125,8 +125,7 @@ def find_k_cliques(G, k):
     """
     for clique in nx.find_cliques(G):
         if len(clique) >= k:
-            for nodeset in combinations(clique, k):
-                yield nodeset
+            yield from combinations(clique, k)
 
 
 def visual_insights():

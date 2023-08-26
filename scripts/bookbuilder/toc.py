@@ -3,12 +3,13 @@ Attempt 1 (2 May 2020) at building an automatic
 PDF builder for NAMS hybrid Markdown and Jupyter files
 """
 
+
 import nbformat
 import yaml
 from pyprojroot import here
 
 with open(here() / "mkdocs.yml", "r+") as f:
-    f = "".join(l for l in f.readlines())
+    f = "".join(f.readlines())
     mkdocs_config = yaml.safe_load(f)
 
 

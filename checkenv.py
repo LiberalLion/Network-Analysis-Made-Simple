@@ -5,10 +5,7 @@ from pkgutil import iter_modules
 
 
 def check_import(packagename):
-    if packagename in (name for _, name, _ in iter_modules()):
-        return True
-    else:
-        return False
+    return packagename in (name for _, name, _ in iter_modules())
 
 
 # If there are new packages that you can import, add them to the list.
@@ -40,13 +37,12 @@ def print_error(p, i):
     :param str p: The name of the package to install.
     :param str i: The name of the package when imported.
     """
-    error_message = f"""
+    return f"""
     {i} not present. Please do the installation using either:
 
     - pip install {p}
     - conda install -c conda-forge {p}
     """
-    return error_message
 
 
 for p, i in packages.items():

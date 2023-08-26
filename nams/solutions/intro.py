@@ -7,15 +7,13 @@ def node_metadata(G):
     """Counts of students of each gender."""
     from collections import Counter
 
-    mf_counts = Counter([d["gender"] for n, d in G.nodes(data=True)])
-    return mf_counts
+    return Counter([d["gender"] for n, d in G.nodes(data=True)])
 
 
 def edge_metadata(G):
     """Maximum number of times that a student rated another student."""
     counts = [d["count"] for n1, n2, d in G.edges(data=True)]
-    maxcount = max(counts)
-    return maxcount
+    return max(counts)
 
 
 def adding_students(G):
@@ -34,11 +32,7 @@ def adding_students(G):
 
 def unrequitted_friendships_v1(G):
     """Answer to unrequitted friendships problem."""
-    unrequitted_friendships = []
-    for n1, n2 in G.edges():
-        if not G.has_edge(n2, n1):
-            unrequitted_friendships.append((n1, n2))
-    return unrequitted_friendships
+    return [(n1, n2) for n1, n2 in G.edges() if not G.has_edge(n2, n1)]
 
 
 def unrequitted_friendships_v2(G):
